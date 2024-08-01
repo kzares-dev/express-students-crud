@@ -13,21 +13,32 @@ const createStudent = async (req, res) => {
   }
 };
 
-// Get all students with pagination
 const getStudents = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; // Get the page number from the query string
-    const limit = parseInt(req.query.limit) || 10; // Get the limit from the query string
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
+    const searchQuery = req.query.search || '';
 
-    const total = await Student.countDocuments(); // Count total documents
+    // Build the search filter
+    const searchFilter = {};
+    if (searchQuery) {
+      searchFilter.$or = [
+        { firstName: { $regex: searchQuery, $options: 'i' } },
+        { lastName: { $regex: searchQuery, $options: 'i' } },
+        { email: { $regex: searchQuery, $options: 'i' } },
+        ];
+    }
 
-    const students = await Student.find();
-    const nextPage = endIndex < total ? page + 1 : null; // Calculate the next page
-    const previousPage = startIndex > 0 ? page - 1 : null; // Calculate the previous page
+    const total = await Student.countDocuments(searchFilter);
 
-    console.log(students)
+    const students = await Student.find(searchFilter)
+      .skip(startIndex)
+      .limit(limit);
+
+    const nextPage = endIndex < total ? page + 1 : null;
+    const previousPage = startIndex > 0 ? page - 1 : null;
 
     res.json({
       students,
@@ -43,7 +54,6 @@ const getStudents = async (req, res) => {
     res.status(500).json({ error: 'Error getting students' });
   }
 };
-
 // Get a student by ID
 const getStudentById = async (req, res) => {
   try {

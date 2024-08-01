@@ -54,19 +54,6 @@ const getStudents = async (req, res) => {
     res.status(500).json({ error: 'Error getting students' });
   }
 };
-// Get a student by ID
-const getStudentById = async (req, res) => {
-  try {
-    const student = await Student.findById(req.params.id);
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-    res.json(student);
-  } catch (error) {
-    console.error('Error getting student by ID:', error);
-    res.status(500).json({ error: 'Error getting student by ID' });
-  }
-};
 
 // Update a student by ID
 const updateStudent = async (req, res) => {
@@ -100,7 +87,6 @@ const deleteStudent = async (req, res) => {
 module.exports = {
   createStudent,
   getStudents,
-  getStudentById,
   updateStudent,
   deleteStudent,
 };

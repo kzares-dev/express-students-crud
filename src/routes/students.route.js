@@ -8,9 +8,6 @@ router.post('/', studentsController.createStudent);
 // Get all students with pagination
 router.get('/', studentsController.getStudents);
 
-// Get a student by ID
-router.get('/:id', studentsController.getStudentById);
-
 // Update a student by ID
 router.put('/:id', studentsController.updateStudent);
 

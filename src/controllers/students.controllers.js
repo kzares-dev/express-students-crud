@@ -3,7 +3,8 @@ const Student = require('../models/student.model'); // Import the Student model
 // Create a new student
 const createStudent = async (req, res) => {
   try {
-    const newStudent = new Student(req.body); // Create a new Student object
+    console.log(req.body)
+    const newStudent = new Student(req.body.student); // Create a new Student object
     const savedStudent = await newStudent.save();
     res.status(201).json({ message: 'Student created', student: savedStudent });
   } catch (error) {
@@ -22,9 +23,11 @@ const getStudents = async (req, res) => {
 
     const total = await Student.countDocuments(); // Count total documents
 
-    const students = await Student.find().skip(startIndex).limit(limit); // Get the students for the current page
+    const students = await Student.find();
     const nextPage = endIndex < total ? page + 1 : null; // Calculate the next page
     const previousPage = startIndex > 0 ? page - 1 : null; // Calculate the previous page
+
+    console.log(students)
 
     res.json({
       students,
@@ -58,7 +61,7 @@ const getStudentById = async (req, res) => {
 // Update a student by ID
 const updateStudent = async (req, res) => {
   try {
-    const updatedStudent = await Student.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updatedStudent = await Student.findByIdAndUpdate(req.params.id, req.body.student, { new: true });
     if (!updatedStudent) {
       return res.status(404).json({ message: 'Student not found' });
     }

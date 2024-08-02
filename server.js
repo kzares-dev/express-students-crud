@@ -8,10 +8,8 @@ const studentsRouter = require("./src/routes/students.route");
 const app = express();
 connectToDatabase();
 
-const corsOptions = {
-  origin: ["https://students-nextjs-demo.vercel.app/", "http://localhost:3000"],
-};
-app.use(cors(corsOptions));
+// Allow requests from any origin (public CORS policy)
+app.use(cors());
 app.use(express.json()); // parse requests of content-type - application/json
 app.use(express.urlencoded({ extended: true })); // parse requests of content-type - application/x-www-form-urlencoded
 

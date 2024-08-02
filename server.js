@@ -8,11 +8,8 @@ const studentsRouter = require("./src/routes/students.route")
 const app = express();
 connectToDatabase();
 
-// config cors to match client host origin
-var corsOptions = {
-  origin: process.env.CLIENT_URL || "http://localhost:3000",
-};
-app.use(cors(corsOptions));
+// config cors to match any origin 
+app.use(cors());
 app.use(express.json());// parse requests of content-type - application/json
 app.use(express.urlencoded({ extended: true })); // parse requests of content-type - application/x-www-form-urlencoded
 

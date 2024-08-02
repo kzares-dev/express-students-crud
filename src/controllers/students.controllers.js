@@ -27,12 +27,14 @@ const getStudents = async (req, res) => {
         { firstName: { $regex: searchQuery, $options: 'i' } },
         { lastName: { $regex: searchQuery, $options: 'i' } },
         { email: { $regex: searchQuery, $options: 'i' } },
-        ];
+      ];
     }
 
     const total = await Student.countDocuments(searchFilter);
 
+    // Sort by creation date (assuming you have a createdAt field)
     const students = await Student.find(searchFilter)
+      .sort({ createdAt: -1 }) // Sort in descending order (newest first)
       .skip(startIndex)
       .limit(limit);
 
@@ -53,6 +55,7 @@ const getStudents = async (req, res) => {
     res.status(500).json({ error: 'Error getting students' });
   }
 };
+
 
 // Update a student by ID
 const updateStudent = async (req, res) => {

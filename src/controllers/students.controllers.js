@@ -3,7 +3,6 @@ const Student = require('../models/student.model'); // Import the Student model
 // Create a new student
 const createStudent = async (req, res) => {
   try {
-    console.log(req.body)
     const newStudent = new Student(req.body.student); // Create a new Student object
     const savedStudent = await newStudent.save();
     res.status(201).json({ message: 'Student created', student: savedStudent });

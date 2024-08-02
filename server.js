@@ -23,6 +23,6 @@ app.get("/", (req, res) => {
 // load the rest of endpoints
 app.use('/api/students', studentsRouter);
 
-app.listen(process.env.PORT || 3001, () => {
+app.listen(process.env.PORT || 3002, () => {
   console.log("server up and running");
 });

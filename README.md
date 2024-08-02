@@ -27,19 +27,14 @@ Inside of this, you'll see the following folders and files:
 
 ## 👨🏻‍💻 Running Locally
 
-You can start using this project locally by running the following command in your desired directory:
+You can start using this project locally
+by running the following command in your desired directory:
 
 ```bash
-# npm 6.x
-git clone https://github.com/kzares-dev/express-students-crud.git/
-
-````
-
-then start the project by running the following commands:
-
-```bash
+git clone https://github.com/kzares-dev/express-students-crud.git/ ./
+npm install
 npm start
-```
+````
 
 | File                      | Description                                                                                                        |
 | :------------------------ | :----------------------------------------------------------------------------------------------------------------- |
